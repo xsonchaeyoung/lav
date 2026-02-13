@@ -1,0 +1,17 @@
+SELECT * FROM tecnica.contacts;
+
+use prueba;
+
+create table autores (id int PRIMARY KEY, nombre varchar(55));
+
+create table articulos (id int PRIMARY KEY, nombre_articulo varchar(100), titulo_articulo varchar(100), fecha_publicacion DATE, autor_id int, FOREIGN KEY (autor_id) REFERENCES autores(id));
+
+INSERT INTO autores VALUES (2, 'EmmanuelOcmp');
+
+INSERT INTO articulos VALUES(2, 'Calabaza', 'fea', '2026-01-19', 1);
+
+SELECT articulos.titulo_articulo, articulos.fecha_publicacion, autores.nombre FROM articulos INNER JOIN autores ON articulos.id = autores.id order by articulos.fecha_publicacion DESC;
+
+SELECT articulos.* from articulos inner join autores on articulos.id = autores.id where autores.id = 2;
+
+select autores.nombre, COUNT(articulos.id) from autores INNER JOIN articulos on articulos.id = autores.id;
