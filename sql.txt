@@ -1,17 +1,40 @@
-SELECT * FROM tecnica.contacts;
+-- CREATE
+CREATE TABLE autores (
+ id INT PRIMARY KEY,
+ nombre VARCHAR(55)
+);
 
-use prueba;
+CREATE TABLE articulos (
+ id INT PRIMARY KEY,
+ nombre_articulo VARCHAR(100),
+ titulo_articulo VARCHAR(100),
+ fecha_publicacion DATE,
+ autor_id INT,
+ FOREIGN KEY (autor_id) REFERENCES autores(id)
+);
 
-create table autores (id int PRIMARY KEY, nombre varchar(55));
-
-create table articulos (id int PRIMARY KEY, nombre_articulo varchar(100), titulo_articulo varchar(100), fecha_publicacion DATE, autor_id int, FOREIGN KEY (autor_id) REFERENCES autores(id));
-
+-- INSERT
+INSERT INTO autores VALUES (1, 'JoshuaJmz');
 INSERT INTO autores VALUES (2, 'EmmanuelOcmp');
 
-INSERT INTO articulos VALUES(2, 'Calabaza', 'fea', '2026-01-19', 1);
+INSERT INTO articulos VALUES (1, 'Calabaza', 'fea', '2026-01-19', 1);
+INSERT INTO articulos VALUES (2, 'El pez', 'Unidad 2', '2026-02-19', 1);
+INSERT INTO articulos VALUES (3, 'SQL Pro', 'JOINs', '2026-03-01', 2);
 
-SELECT articulos.titulo_articulo, articulos.fecha_publicacion, autores.nombre FROM articulos INNER JOIN autores ON articulos.id = autores.id order by articulos.fecha_publicacion DESC;
+-- 3
+SELECT articulos.titulo_articulo, autores.nombre, articulos.fecha_publicacion
+FROM articulos
+INNER JOIN autores ON articulos.autor_id = autores.id
+ORDER BY articulos.fecha_publicacion DESC;
 
-SELECT articulos.* from articulos inner join autores on articulos.id = autores.id where autores.id = 2;
+-- 4
+SELECT articulos.*
+FROM articulos
+INNER JOIN autores ON articulos.autor_id = autores.id
+WHERE autores.id = 2;
 
-select autores.nombre, COUNT(articulos.id) from autores INNER JOIN articulos on articulos.id = autores.id;
+-- 5
+SELECT autores.nombre, COUNT(articulos.id)
+FROM autores
+LEFT JOIN articulos ON articulos.autor_id = autores.id
+GROUP BY autores.nombre;
